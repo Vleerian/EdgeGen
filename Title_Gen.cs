@@ -14,11 +14,11 @@ namespace EdgeGen
         public static string[] Title_Prefix = new string[] {
             "angel's", "demon's", "abyssal", "tenfold", "thousandfold",
             "grave's", "blind", "broken", "chaos'", "comet's", "corruption's",
-            "divine", "destiny's", "eclipse", "champion's ", "fallen ",
+            "divine", "destiny's", "eclipse", "champion's", "fallen",
             "king's", "final", "hatred's", "knight's", "hell's", "hollow",
             "interrogator", "hope's", "last", "misery's", "perfect",
             "ultimate", "silver", "recruit's", "oathkeeper's", "bandit's",
-            "alpha", "beta", "omega", "gamma", "lich's", "liar's"
+            "alpha", "beta", "omega", "gamma", "lich's", "liar's", "perfected"
         };
 
         public static string[] Title_Completes = new string[] {
@@ -29,7 +29,7 @@ namespace EdgeGen
             "espada", "harmony", "extinction", "frenzy", "florence", 
             "bite", "hellfire", "silence", "end", "infamy", "interrogator",
             "defender", "rites", "nirvana", "rage", "oblivion", "purifier",
-            "complement"
+            "complement", "hyperion"
         };
 
         public static string[] Title_Part_1 = new string[] {
@@ -64,6 +64,7 @@ namespace EdgeGen
             "demonic", "hateful", "hungering", "gleaming", "glinting", "greedy", "skeletal",
             "grieving", "primitive", "promised", "improved", "haunted", "heartless",
             "rusty", "wicked", "exalted", "adamantite", "bronzed", "hardened", "obsidian",
+            "supreme", "perfected"
         };
 
         public static string[] Infusion = new string[] {
@@ -90,17 +91,22 @@ namespace EdgeGen
             "skewer", "carver", "etcher", "eculptor", "razor", "crusader", "blade", "blade", "edge",
         };
 
+        public static string[] Flair_Prefix = new string[] {
+            "harbinger", "herald", "forteller", "precusor", "origin", "bringer",
+            "master", "progenitor", "wielder", "destroyer",
+        };
+
         public static string[] Flair = new string[] {
             "ancient {{FLAIR1}}", "broken {{FLAIR1}}", "blessed {{FLAIR1}}", "dark {{FLAIR1}}",
             "closing {{FLAIR1}}", "conquered {{FLAIR1}}", "eternal {{FLAIR1}}", "timeless {{FLAIR1}}",
             "time-lost {{FLAIR1}}", "trembling {{FLAIR1}}", "unholy {{FLAIR1}}", "holy {{FLAIR1}}",
             "twilight's {{FLAIR1}}", "pride's {{FLAIR1}}", "traitor's {{FLAIR1}}", "hell's {{FLAIR1}}",
-            "heaven's {{FLAIR1}}",
+            "heaven's {{FLAIR1}}", "royal {{FLAIR1}}", "imperial {{FLAIR1}}",
             
             "wind{{FLAIR2}}", "storm{{FLAIR2}}", "day{{FLAIR2}}", "night{{FLAIR2}}", "moon{{FLAIR2}}",
             
             "the shifting {{FLAIR3}}", "twisting {{FLAIR3}}", "corrupted {{FLAIR3}}", "blighted {{FLAIR3}}",
-            "the burning {{FLAIR3}}", "frozen {{FLAIR3}}", "radiant {{FLAIR3}}", "high {{FLAIR3}}",
+            "the burning {{FLAIR3}}", "frozen {{FLAIR3}}", "radiant {{FLAIR3}}", "high {{FLAIR3}}", "searing {{FLAIR3}}",
 
             "the leviathan", "the light", "the lion", "the lone victor", "the lone wolf", "the king",
             "the gladiator", "the fallen", "the covanent", "the crown", "the damned",
@@ -109,7 +115,7 @@ namespace EdgeGen
         public static string[] Flair1 = new string[] {
             "magic", "power", "fortune", "bones", "dreams", "eyes", "worlds",
             "delusions", "denial", "sorrow", "struggle", "games", "misery",
-            "might"
+            "might", "nightmares", "grandeur"
         };
 
         public static string[] Flair2 = new string[] {
@@ -125,11 +131,18 @@ namespace EdgeGen
 
         public static string Get_Title()
         {
-            if(rand.Next(2) == 0)
-            {
-                return GetRand(Title_Completes);
-            }
-            return $"{ GetRand(Title_Part_1) }{ GetRand(Title_Part_2) }";
+            string title = "";
+            bool flip = rand.Next(2) == 1 ? true : false;
+            if(flip)
+                title += GetRand(Title_Prefix) + " ";
+
+            flip = rand.Next(2) == 1 ? true : false;
+            if(flip)
+                title += GetRand(Title_Completes);
+            else
+                title += $"{ GetRand(Title_Part_1) }{ GetRand(Title_Part_2) }";
+            
+            return title;
         }
 
         public static string Get_Description()
@@ -149,13 +162,21 @@ namespace EdgeGen
             return type;
         }
 
+        public static string Get_Flair_Prefix()
+        {
+            bool flip = rand.Next(2) == 1 ? true : false;
+            if(flip)
+                return "of";
+            return ", " + GetRand(Flair_Prefix) + " of";
+        }
+
         public static string Get_Flair()
         {
             var flair = GetRand(Flair);
             flair = flair.Replace("{{FLAIR1}}", GetRand(Flair1));
             flair = flair.Replace("{{FLAIR2}}", GetRand(Flair2));
             flair = flair.Replace("{{FLAIR3}}", GetRand(Flair3));
-            return flair;
+            return Get_Flair_Prefix() + " " + flair;
         }
     }
 
