@@ -1,12 +1,9 @@
-namespace EdgeGen
+public class Sword : SwordComponent
 {
-    public class Sword : IWeapon
-    {
-        public Prefix Prefix { get; init; }
-        public SwordType Type { get; init; }
-        public Afffix Affix { get; init; }
+    public readonly string SwordName;
 
-        public override string ToString() =>
-            $"{Prefix} {Type} {Affix}";
-    }
+    public Sword(string Name) : base (null) =>
+        SwordName = Name;
+
+    public override string ToString() => SwordName;
 }
